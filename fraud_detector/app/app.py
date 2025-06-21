@@ -66,8 +66,8 @@ class ProcessingService:
                 input_df = pd.DataFrame([data['data']])
 
                 # Препроцессинг и предсказание
-                processed_df = run_preproc(self.train, input_df)
-                submission = make_pred(processed_df, "kafka_stream")
+                processed_df = run_preproc(input_df)
+                submission = make_pred(processed_df)
 
                 # Добавляем ID в результат
                 submission['transaction_id'] = transaction_id

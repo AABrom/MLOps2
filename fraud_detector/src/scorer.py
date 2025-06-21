@@ -16,14 +16,13 @@ model.load_model(model_path)
 logger.info('Pretrained model imported successfully...')
 
 # Make prediction
-def make_pred(dt, path_to_file):
+def make_pred(dt, source_info="kafka"):
 
     # Make submission dataframe
     submission = pd.DataFrame({
-        'index':  pd.read_csv(path_to_file).index,
         'prediction': model.predict(dt)
     })
-    logger.info('Prediction complete for file: %s', path_to_file)
+    logger.info(f'Prediction complete for for data from {source_info}')
 
     # Return proba for positive class
     return submission

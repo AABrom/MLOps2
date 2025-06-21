@@ -17,9 +17,11 @@ CAT_COLS = ['merch', 'cat_id', 'name_1', 'name_2',
 
 def add_time_features(df):
     logger.debug('Adding time features...')
-    df['transaction_time'] = pd.to_datetime(df['transaction_time'], 
-                                             format='%Y-%m-%d %H:%M',
-                                             errors='raise') 
+    logger.debug(f"Columns before adding time features: {df.columns.tolist()}")
+    if 'transaction_time' not in df.columns:
+        raise KeyError("Column 'transaction_time' is missing in DataFrame")
+    df['transaction_time'] = pd.to_datetime(df['transaction_time'], format='%Y-%m-%d %H:%M', errors='raise')
+    
     df['year'] = df.transaction_time.dt.year
     df['month'] = df.transaction_time.dt.month
     df['day'] = df.transaction_time.dt.day
@@ -79,7 +81,7 @@ def load_train_data():
     logger.info(f'Train data processed. Shape: {train.shape}')
     return train
 
-def run_preproc(input_df, update_encoders=True):
+def run_preproc(input_df):
     """Preprocess input data"""
     logger.info('Running preprocessing...')
     
@@ -98,8 +100,8 @@ def run_preproc(input_df, update_encoders=True):
         if col in cat_df.columns:
             cat_df[col] = encoders[col].transform(cat_df[col].astype(str))
     
-    # # Add features
-    # input_df = add_time_features(input_df)
+    # Add features
+    input_df = add_time_features(input_df)
     input_df = add_cartesian_features(input_df)
     
     # Merge and drop columns
