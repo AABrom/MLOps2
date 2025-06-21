@@ -41,8 +41,8 @@
 
 ### Запуск
 ```bash
-git clone https://github.com/your-repo/fraud-detection-system.git
-cd fraud-detection-system
+git clone https://github.com/AABrom/MLOps2
+cd MLOps2
 
 # Сборка и запуск всех сервисов
 docker-compose up --build
