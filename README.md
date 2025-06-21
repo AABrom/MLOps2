@@ -26,7 +26,7 @@
          Категориальные переменные:
          - Label Encoding
    - Производит скоринг 
-   - Выгружает результат скоринга в топик kafka `scoring`
+   - Выгружает бинарный результат в топик kafka `scoring`
 
 3. **Kafka Infrastructure**:
    - Zookeeper + Kafka брокер
@@ -75,8 +75,7 @@ docker-compose up --build
  - Скоринговые оценки пишутся в топик scoring в формате:
     ```json
     {
-    "score": 0.995, 
-    "fraud_flag": 1, 
+    "score": 0,  
     "transaction_id": "d6b0f7a0-8e1a-4a3c-9b2d-5c8f9d1e2f3a"
     }
     ```
@@ -107,6 +106,6 @@ docker-compose up --build
 *Примечание:* 
 
 Для полной функциональности убедитесь, что:
-1. Модель `my_catboost.cbm` размещена в `fraud_detector/models/`
+1. Модель `xgb.bin` размещена в `fraud_detector/models/`
 2. Тренировочные данные находятся в `fraud_detector/train_data/`
 3. Порты 8080, 8501 и 9095 свободны на хосте
